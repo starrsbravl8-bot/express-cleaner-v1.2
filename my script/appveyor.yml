@@ -1,0 +1,72 @@
+version: 1.0.{build}
+
+# Образ для сборки
+image: Visual Studio 2022
+
+# Конфигурация сборки
+configuration: Release
+
+# Платформа
+platform: Any CPU
+
+# Клонирование репозитория
+clone_depth: 1
+
+# Переменные окружения
+environment:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+
+# Установка зависимостей
+install:
+  - cmd: cd "%APPVEYOR_BUILD_FOLDER%"
+  - cmd: dotnet --version
+  - cmd: dotnet restore "ExpressCleaner/ExpressCleaner.csproj"
+
+# Скрипт сборки
+build_script:
+  - cmd: echo Building Express Cleaner...
+  - cmd: cd "%APPVEYOR_BUILD_FOLDER%/ExpressCleaner"
+  - cmd: dotnet build -c Release "ExpressCleaner.csproj"
+  - cmd: echo Building standalone version...
+  - cmd: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true "ExpressCleaner.csproj"
+  - cmd: dotnet publish -c Release -r win-x86 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true "ExpressCleaner.csproj"
+  - cmd: cd "%APPVEYOR_BUILD_FOLDER%"
+
+# Тесты (пока отключены)
+test: off
+
+# Артефакты для скачивания
+artifacts:
+  # Обычная версия
+  - path: ExpressCleaner\bin\Release\net5.0-windows\ExpressCleaner.exe
+    name: ExpressCleaner-Regular
+    
+  # Standalone x64
+  - path: ExpressCleaner\bin\Release\net5.0-windows\win-x64\publish\ExpressCleaner.exe
+    name: ExpressCleaner-Standalone-x64
+    
+  # Standalone x86
+  - path: ExpressCleaner\bin\Release\net5.0-windows\win-x86\publish\ExpressCleaner.exe
+    name: ExpressCleaner-Standalone-x86
+
+# Деплой на GitHub Releases (опционально)
+deploy:
+  - provider: GitHub
+    auth_token:
+      secure: YOUR_GITHUB_TOKEN_HERE
+    artifact: /.*\.exe/
+    draft: false
+    prerelease: false
+    on:
+      branch: main
+      appveyor_repo_tag: true
+
+# Уведомления
+notifications:
+  - provider: Email
+    to:
+      - your-email@example.com
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true

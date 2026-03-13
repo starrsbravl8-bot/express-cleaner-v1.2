@@ -1,0 +1,85 @@
+<Window x:Class="ExpressCleaner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Express Cleaner" Height="700" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundColor}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Border Grid.Row="0" Background="{StaticResource PrimaryColor}">
+            <TextBlock Text="Express Cleaner" 
+                       FontSize="28" 
+                       FontWeight="Bold" 
+                       Foreground="{StaticResource LightTextColor}"
+                       VerticalAlignment="Center" 
+                       Margin="20,0"/>
+        </Border>
+        
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Sidebar Menu -->
+            <Border Grid.Column="0" Background="{StaticResource SidebarColor}">
+                <StackPanel Margin="0,20,0,0">
+                    <Button x:Name="BtnDashboard" Content="Dashboard" Click="MenuButton_Click" Tag="Dashboard" Style="{StaticResource MenuButtonStyle}"/>
+                    <Button x:Name="BtnAnalysis" Content="Анализ" Click="MenuButton_Click" Tag="Analysis" Style="{StaticResource MenuButtonStyle}"/>
+                    <Button x:Name="BtnCleaning" Content="Очистка" Click="MenuButton_Click" Tag="Cleaning" Style="{StaticResource MenuButtonStyle}"/>
+                    <Button x:Name="BtnBrowsers" Content="Браузеры" Click="MenuButton_Click" Tag="Browsers" Style="{StaticResource MenuButtonStyle}"/>
+                    <Button x:Name="BtnSystem" Content="Система" Click="MenuButton_Click" Tag="System" Style="{StaticResource MenuButtonStyle}"/>
+                    <Button x:Name="BtnTools" Content="Инструменты" Click="MenuButton_Click" Tag="Tools" Style="{StaticResource MenuButtonStyle}"/>
+                    <Button x:Name="BtnSettings" Content="Настройки" Click="MenuButton_Click" Tag="Settings" Style="{StaticResource MenuButtonStyle}"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- Content Area -->
+            <Border Grid.Column="1" Background="White" Margin="10">
+                <ContentControl x:Name="ContentArea"/>
+            </Border>
+        </Grid>
+        
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="{StaticResource SidebarColor}">
+            <TextBlock x:Name="StatusText" 
+                       Text="Готов к работе" 
+                       Foreground="{StaticResource LightTextColor}"
+                       VerticalAlignment="Center" 
+                       Margin="10,0"/>
+        </Border>
+    </Grid>
+    
+    <Window.Resources>
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource LightTextColor}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,15"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#37474F"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+</Window>

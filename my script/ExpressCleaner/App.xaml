@@ -1,0 +1,13 @@
+<Application x:Class="ExpressCleaner.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <SolidColorBrush x:Key="PrimaryColor" Color="#2196F3"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#FF5722"/>
+        <SolidColorBrush x:Key="BackgroundColor" Color="#F5F5F5"/>
+        <SolidColorBrush x:Key="SidebarColor" Color="#263238"/>
+        <SolidColorBrush x:Key="TextColor" Color="#212121"/>
+        <SolidColorBrush x:Key="LightTextColor" Color="#FFFFFF"/>
+    </Application.Resources>
+</Application>
